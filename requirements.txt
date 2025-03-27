@@ -1,1 +1,7 @@
 django
+python-dotenv
+psycopg2-binary
+dj-database-url
+django-cleanup
+django-browser-reload
+pywatchman
