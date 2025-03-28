@@ -1,20 +1,20 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
-
+from .models import CustomUser, UserProfile
+from django.utils.html import format_html
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = (
+        "id",
         "email",
-        "first_name",
-        "last_name",
+        "username",
         "user_type",
     )
-    list_filter = ("user_type", "email", "first_name", "last_name")
+    list_filter = ("user_type", "email", "username")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal Info", {"fields": ("first_name", "last_name")}),
+        ("Personal Info", {"fields": ("username",)}),
         (
             "Permissions",
             {
@@ -39,8 +39,7 @@ class CustomUserAdmin(UserAdmin):
                     "email",
                     "password1",
                     "password2",
-                    "first_name",
-                    "last_name",
+                    "username",
                     "user_type",
                     "is_staff",
                     "is_active",
@@ -48,7 +47,7 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
-    search_fields = ("email",)
+    search_fields = ("email", "username")
     ordering = ("email",)
 
     def save_model(self, request, obj, form, change):
@@ -60,3 +59,37 @@ class CustomUserAdmin(UserAdmin):
 
 # Register the custom user model with the custom admin class
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+class UserProfileAdmin(admin.ModelAdmin):
+    model = UserProfile
+    list_display = (
+        "id",
+        "user",
+        "profile_picture",
+        "thumbnail_preview",
+    )
+    list_display_links = ("id", "user")
+    list_filter = ("user",)
+    fieldsets = (
+        (None, {"fields": ("user", "profile_picture")}),
+        ("Thumbnail", {"fields": ("thumbnail",)}),
+    )
+    search_fields = ("user",)
+    ordering = ("id",)
+    
+    readonly_fields = ("thumbnail",)
+    
+    def thumbnail_preview(self, obj):
+        if obj.thumbnail:
+            return format_html(
+                '<img src="{}" style="width: 50px; height: 50px;" />', obj.thumbnail.url
+            )
+        return "No Thumbnail"
+
+    thumbnail_preview.short_description = (
+        "Thumbnail Preview"  # Set column header in the admin panel
+    )
+
+
+admin.site.register(UserProfile, UserProfileAdmin)

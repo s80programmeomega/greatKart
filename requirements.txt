@@ -5,3 +5,4 @@ dj-database-url
 django-cleanup
 django-browser-reload
 pywatchman
+pillow
