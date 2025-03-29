@@ -48,6 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Created
     "accounts",
+    "category",
+    "store",
+    "cart",
     # installed
     "django_cleanup.apps.CleanupConfig",
     "django_browser_reload",
@@ -63,6 +66,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Custom
     "django_browser_reload.middleware.BrowserReloadMiddleware",
+    "cart.middleware.CartMiddleware",
 ]
 
 ROOT_URLCONF = 'greatkart.urls'

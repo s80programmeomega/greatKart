@@ -89,15 +89,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class CustomAnonymousUser(AnonymousUser):
     def __init__(self):
         super().__init__()
-        self._user_type = UserType.GUEST
+        self.user_type = UserType.GUEST
 
     @property
     def user_type(self):
-        return self._user_type
+        return self.user_type
 
     @user_type.setter
     def user_type(self, value):
-        self._user_type = value
+        self.user_type = value
 
 
 class UserProfile(models.Model):
@@ -156,7 +156,6 @@ class UserProfile(models.Model):
             print(f"===> Clearing thumbnail {self.thumbnail} <===")
             self.thumbnail.delete(save=False)
             self.thumbnail = None
-
 
     def __str__(self):
         return self.user.username

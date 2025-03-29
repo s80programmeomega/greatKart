@@ -71,14 +71,14 @@ class UserProfileAdmin(admin.ModelAdmin):
     )
     list_display_links = ("id", "user")
     list_filter = ("user",)
-    fieldsets = (
-        (None, {"fields": ("user", "profile_picture")}),
-        ("Thumbnail", {"fields": ("thumbnail",)}),
-    )
+    # fieldsets = (
+    #     (None, {"fields": ("user", "profile_picture")}),
+    #     ("Thumbnail", {"fields": ("thumbnail",)}),
+    # )
     search_fields = ("user",)
     ordering = ("id",)
     
-    readonly_fields = ("thumbnail",)
+    readonly_fields = ("user", "thumbnail",)
     
     def thumbnail_preview(self, obj):
         if obj.thumbnail:
