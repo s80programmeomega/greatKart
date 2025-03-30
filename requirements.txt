@@ -6,3 +6,4 @@ django-cleanup
 django-browser-reload
 pywatchman
 pillow
+docutils

@@ -46,6 +46,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # custom
+    "django.contrib.admindocs",
+    "django.contrib.humanize",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
     # Created
     "accounts",
     "category",
@@ -65,9 +70,14 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Custom
+    "django.contrib.admindocs.middleware.XViewMiddleware", #docutils middleware
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "cart.middleware.CartMiddleware",
 ]
+
+# This current side ID
+SITE_ID = 1
+APP_DIRS = True
 
 ROOT_URLCONF = 'greatkart.urls'
 

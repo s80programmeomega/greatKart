@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Store{% endblock title %}
 
@@ -170,7 +171,7 @@
 										<label for="" class="text-success">Stock: {{p.stock}}</label>
 									{% endif %}
 									<div class="price-wrap mt-2">
-										<span class="price">$ {{p.price}}</span>
+										<span class="price">$ {{p.price | intcomma}}</span>
 									</div> <!-- price-wrap.// -->
 								</div>
 								{% if p.stock > 0%}

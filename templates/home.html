@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
   GreatKart | One of the Biggest Online Shopping Platform
@@ -35,7 +36,7 @@
                 <a href="{{p.get_url}}" class="img-wrap"> <img src='{{p.product_image.url}}' alt='item-image'> </a>
                 <figcaption class="info-wrap">
                   <a href="{{p.get_url}}" class="title">{{p.product_name}}</a>
-                  <div class="price mt-1">$ {{p.price}}</div> <!-- price-wrap.// -->
+                  <div class="price mt-1">$ {{p.price | intcomma}}</div> <!-- price-wrap.// -->
                 </figcaption>
               </div>
             </div> <!-- col.// -->

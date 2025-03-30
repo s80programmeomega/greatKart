@@ -3,6 +3,7 @@ dj-database-url==2.3.0
 Django==5.1.7
 django-browser-reload==1.18.0
 django-cleanup==9.0.0
+docutils==0.21.2
 pillow==11.1.0
 psycopg2-binary==2.9.10
 python-dotenv==1.1.0

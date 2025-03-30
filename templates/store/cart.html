@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 	<section class="section-content padding-y bg">
@@ -56,8 +57,8 @@
 						</td>
 						<td>
 							<div class="price-wrap">
-								<var class="price">$ {{ci.sub_total}}</var>
-								<small class="text-muted"> $ {{ci.product.price}} each </small>
+								<var class="price">$ {{ci.sub_total | intcomma}}</var>
+								<small class="text-muted"> $ {{ci.product.price | intcomma}} each </small>
 							</div> <!-- price-wrap .// -->
 						</td>
 						<td class="text-right">
@@ -76,15 +77,15 @@
 					<div class="card-body">
 						<dl class="dlist-align">
 						<dt>Total price:</dt>
-						<dd class="text-right">$ {{total}} </dd>
+						<dd class="text-right">$ {{total | intcomma}} </dd>
 						</dl>
 						<dl class="dlist-align">
 						<dt>Tax:</dt>
-						<dd class="text-right"> $ {{tax}}</dd>
+						<dd class="text-right"> $ {{tax | intcomma}}</dd>
 						</dl>
 						<dl class="dlist-align">
 						<dt>Grand Total:</dt>
-						<dd class="text-right text-dark b"><strong>$ {{grand_total}}</strong></dd>
+						<dd class="text-right text-dark b"><strong>$ {{grand_total | intcomma}}</strong></dd>
 						</dl>
 						<hr>
 						<p class="text-center mb-3">

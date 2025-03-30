@@ -14,18 +14,34 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from store import views
 
+from django.contrib.sitemaps.views import sitemap
+
+from store.sitemaps import ProductSitemap
+
+sitemaps = {
+    "products": ProductSitemap,
+}
+
 urlpatterns = [
     path("home/", views.home, name="home"),
+    path("admin/doc/", include("django.contrib.admindocs.urls")),
     path("admin/", admin.site.urls),
     path("reload/", include("django_browser_reload.urls")),
     path("cart/", include("cart.urls")),
     path("store/", include("store.urls")),
+    path(
+        "sitemap.xml/",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
 ]
 
 if settings.DEBUG:

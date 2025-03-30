@@ -1,3 +1,31 @@
+/* Ensure the html and body take up the full height of the viewport */
+html, body {
+    height: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Page container to manage layout */
+.page-container {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important; /* Ensure the container takes up the full viewport height */
+}
+
+/* Main content wrapper */
+.content-wrapper {
+    flex: 1; /* Pushes the footer to the bottom when content is short */
+}
+
+/* Footer styling */
+#my-footer {
+    background-color: #f8f9fa; /* Optional: Footer background color */
+    padding: 20px 0; /* Optional: Footer padding */
+    text-align: center; /* Optional: Center-align text */
+}
+
+
 .border_warning{
     border-top: 1px solid orange;
     border-bottom: 1px solid orange;
