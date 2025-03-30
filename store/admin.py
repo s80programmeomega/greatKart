@@ -1,6 +1,7 @@
 from django.contrib import admin
-from .models import Product, Variation
+from django.utils.html import format_html
 
+from .models import Product, Variation
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -10,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
         "price",
         "stock",
         "category",
+        "thumbnail_preview",
         "modified_date",
         "is_available",
     ]
@@ -21,6 +23,17 @@ class ProductAdmin(admin.ModelAdmin):
         "modified_date",
         "is_available",
     ]
+
+    def thumbnail_preview(self, obj: Product):
+        if obj.product_image:
+            return format_html(
+                f'<a href={obj.product_image.url}><img src="{obj.product_image.url}" style="width: 50px; height: 50px;" /></a>',
+            )
+        return "No Thumbnail"
+
+    thumbnail_preview.short_description = (
+        "Thumbnail Preview"  # Set column header in the admin panel
+    )
 
 
 class VariationAdmin(admin.ModelAdmin):

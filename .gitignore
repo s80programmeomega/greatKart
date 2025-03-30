@@ -173,5 +173,10 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# CUSTOM
-media/
+## CUSTOM
+
+# Ignore everything in the media directory
+/media/*
+
+# Allow files inside the defaults folder
+!/media/defaults/*

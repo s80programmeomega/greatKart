@@ -18,11 +18,14 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from store import views
 
 urlpatterns = [
+    path("home/", views.home, name="home"),
     path("admin/", admin.site.urls),
     path("reload/", include("django_browser_reload.urls")),
     path("cart/", include("cart.urls")),
+    path("store/", include("store.urls")),
 ]
 
 if settings.DEBUG:

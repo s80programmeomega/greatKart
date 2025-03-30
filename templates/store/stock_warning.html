@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-8 alert alert-warning" role="alert">
+                <p class="text-center">The item quantity is bigger than the stock available, <br>
+                Please make sure you do not go beyond the stock available !
+                </p>
+            </div>
+            <div class="alert alert-info" role="alert">
+                <p class="text-center">
+                    The concerned products have their titles colored with orange !
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <a name="" id="" class="btn btn-outline-primary" href=" {% url 'cart' %} " role="button">
+                Check Your Cart
+            </a>
+        </div>
+    </div>
+{% endblock content %}

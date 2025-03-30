@@ -1,14 +1,22 @@
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from cart.models import Cart, CartItem
 from store.models import Product, Variation
 
 
-def get_cart_id(request):
-    cart_id = request.session.session_key
-    if not cart_id:
-        cart_id = request.session.create()
-    return cart_id
+def get_cart_id(request: HttpRequest):
+    # try:
+    #     cart_id = request.session["cart_id"]
+    # except KeyError:
+    #     if request.user.is_authenticated:
+    #         cart, _ = Cart.objects.get_or_create(user=request.user)
+    #         cart_id = cart.id
+    #     else:
+    # cart_id = request.session.session_key
+    # if not cart_id:
+    #     cart_id = request.session.create()
+    return request.session.get("cart_id")
 
 
 def add_cart(request, product_id):
@@ -78,7 +86,7 @@ def remove_cart_item(request, product_id):
     return redirect("cart")
 
 
-def get_cart(request):
+def get_cart(request: HttpRequest):
     total = 0
     quantity = 0
     cart_items = []
