@@ -175,5 +175,12 @@ cython_debug/
 
 ## CUSTOM
 
-# Allow files inside the defaults folder
+# Ignore everything in the media directory
+/media/*
+
+# Allow the defaults folder inside the media directory
+!/media/defaults/
+
+# Allow all files inside the defaults folder
 !/media/defaults/*
+
