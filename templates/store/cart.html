@@ -31,7 +31,12 @@
 								</div>
 								<figcaption class="info">
 									<a  href="{{ci.product.get_url}}" class="title {% if ci.quantity > ci.product.stock %}text-warning{% endif %}">{{ci.product.product_name}}</a>
-									<p class="text-muted small">Color: Blue<br> Size: xl</p>
+									{% for color in ci.product.variation_set.colors %}
+										<p class="text-muted small">Color: {{color.variation_value}}</p>
+									{% endfor %}
+									{% for size in ci.product.variation_set.sizes %}
+										<p class="text-muted small">Size: {{size.variation_value}}</p>
+									{% endfor %}
 								</figcaption>
 							</figure>
 						</td>
@@ -85,7 +90,7 @@
 						<p class="text-center mb-3">
 							<img src="{% static './images/misc/payments.png' %}" height="26">
 						</p>
-						<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
+						<a href="{% url 'place_order' %}" class="btn btn-primary btn-block"> Checkout </a>
 						<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
 					</div> <!-- card-body.// -->
 					</div> <!-- card.// -->

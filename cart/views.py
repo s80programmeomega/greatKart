@@ -114,3 +114,7 @@ def get_cart(request: HttpRequest):
         "items_count": items_count,
     }
     return render(request, "store/cart.html", context)
+
+
+def place_order(request: HttpRequest):
+    return render(request, "store/place-order.html")

@@ -11,4 +11,5 @@ urlpatterns = [
         views.remove_cart_item,
         name="remove_cart_item",
     ),
+    path("place_order/", views.place_order, name="place_order"),
 ]
