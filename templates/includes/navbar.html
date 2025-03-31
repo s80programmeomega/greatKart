@@ -10,11 +10,20 @@
         <div class="collapse navbar-collapse" id="navbarTop4">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-            <a href="#" class="nav-link"> English </a>
-
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> Language </a>
+                <ul class="dropdown-menu small">
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                    <li><a class="dropdown-item" href="#">Arabic</a></li>
+                    <li><a class="dropdown-item" href="#">Russian </a></li>
+                </ul>
             </li>
             <li class="nav-item dropdown">
-            <a href="#" class="nav-link"> USD </a>
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
+                <ul class="dropdown-menu small">
+                    <li><a class="dropdown-item" href="#">EUR</a></li>
+                    <li><a class="dropdown-item" href="#">AED</a></li>
+                    <li><a class="dropdown-item" href="#">RUBL </a></li>
+                </ul>
             </li>
         </ul>
         <ul class="navbar-nav">
@@ -66,11 +75,11 @@
             <div class="widget-header">
                 {% if user.is_authenticated %}
                     <small class="title text-muted">Welcome {{request.user.username}}</small>
-                    <a href="#"> Logout</a> 
+                    <a href='{% url "accounts:logout" %}'> Logout</a> 
                 {% else %}
                     <small class="title text-muted">Welcome guest!</small>
-                    <a href="./signin.html">Sign in</a> <span class="dark-transp"> | </span>
-                    <a href="./register.html"> Register</a> 
+                    <a href='{% url "accounts:login" %}'>Sign in</a> <span class="dark-transp"> | </span>
+                    <a href='{% url "accounts:register" %}'> Register</a> 
                 {% endif %}
                 <div>
                 </div>

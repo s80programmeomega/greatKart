@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}
+    Register
+{% endblock title %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+<!-- ============================ COMPONENT REGISTER   ================================= -->
+	<div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+      <article class="card-body">
+        <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+        <form method='POST' action="{% url 'accounts:register' %}">
+            {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.extra_tags}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field, error in form.errors.items %}
+                        {{field}}: {{error}}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% for field in form.fields %}
+                <p>
+                    <label>{{field.label}}</label>
+                    {{field}}
+                </p>
+            {% endfor %}
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" placeholder="" name="username">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="" name="email">
+                <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div> <!-- form-group end.// -->
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Create password</label>
+                    <input class="form-control" type="password" name="password">
+                </div> <!-- form-group end.// --> 
+                <div class="form-group col-md-6">
+                    <label>Repeat password</label>
+                    <input class="form-control" type="password" name="confirm_password">
+                </div> <!-- form-group end.// -->  
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+            </div> <!-- form-group// -->      
+                
+        </form>
+       </article><!-- card-body.// -->
+    </div> <!-- card .// -->
+    <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
+    <br><br>
+<!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock content %}

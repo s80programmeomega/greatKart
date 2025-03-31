@@ -11,6 +11,7 @@ class CustomUserAdmin(UserAdmin):
         "username",
         "user_type",
     )
+    list_display_links = ("id", "email")
     list_filter = ("user_type", "email", "username")
     fieldsets = (
         (None, {"fields": ("email", "password")}),

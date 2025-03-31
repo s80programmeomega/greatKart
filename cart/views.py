@@ -1,6 +1,6 @@
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
-
+from django.contrib.auth.decorators import login_required
 from cart.models import Cart, CartItem
 from store.models import Product, Variation
 
@@ -86,6 +86,7 @@ def remove_cart_item(request, product_id):
     return redirect("cart")
 
 
+@login_required
 def get_cart(request: HttpRequest):
     total = 0
     quantity = 0
