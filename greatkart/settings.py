@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 import uuid
+from ctypes.wintypes import ATOM
 from pathlib import Path
 
 import dj_database_url
@@ -70,7 +71,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Custom
-    "django.contrib.admindocs.middleware.XViewMiddleware", #docutils middleware
+    "django.contrib.admindocs.middleware.XViewMiddleware",  # docutils middleware
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "cart.middleware.CartMiddleware",
 ]
@@ -123,6 +124,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'ATOMIC_REQUESTS': True,  # Enable transactional requests globally
+
     }
 }
 
@@ -164,7 +167,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = [
-   BASE_DIR/"greatkart/static",
+    BASE_DIR/"greatkart/static",
 ]
 
 MEDIA_URL = "media/"
@@ -175,3 +178,18 @@ MEDIA_ROOT = BASE_DIR / "media/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Use your email provider's SMTP server
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  # Your email address
+EMAIL_HOST_PASSWORD = os.environ.get(
+    'EMAIL_HOST_PASSWORD')  # Your email password
+
+## Default email origin used to send emails from the application
+# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+print(f"{EMAIL_HOST_USER=}, *** {EMAIL_HOST_PASSWORD=}")
