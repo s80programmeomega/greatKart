@@ -60,6 +60,8 @@ INSTALLED_APPS = [
     # installed
     "django_cleanup.apps.CleanupConfig",
     "django_browser_reload",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,11 @@ ROOT_URLCONF = 'greatkart.urls'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# LOGIN_URL = "accounts:login"
+LOGIN_URL = "accounts:login"
+LOGOUT_REDIRECT_URL = "logout"
+
+# Set the password reset link expiry time in seconds
+PASSWORD_RESET_TIMEOUT = 300 # 5 minutes
 
 TEMPLATES = [
     {
@@ -191,7 +197,8 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')  # Your email address
 EMAIL_HOST_PASSWORD = os.environ.get(
     'EMAIL_HOST_PASSWORD')  # Your email password
 
-## Default email origin used to send emails from the application
-# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
-print(f"{EMAIL_HOST_USER=}, *** {EMAIL_HOST_PASSWORD=}")
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+

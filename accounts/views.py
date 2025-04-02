@@ -1,3 +1,5 @@
+from django.shortcuts import render
+from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth import login as auth_login
@@ -119,6 +121,18 @@ class CustomPasswordChangeView(PasswordChangeView):
 
     def form_valid(self, form):
         # Log out the user after a successful password change
-        _ = super().form_valid(form)
+        response = super().form_valid(form)
         logout(self.request)
-        return redirect(self.success_url)
+        messages.success(self.request,                        'Password changed successfully. Please login again.',
+                         extra_tags='success')
+        return response
+
+
+# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+#     template_name = "accounts/password_reset_confirm.html"
+#     success_url = reverse_lazy("accounts:password_reset_complete")
+
+#     def get(self, request, *args, **kwargs):
+#         response = super().get(request, *args, **kwargs)
+#         print(f"Form context: {self.get_context_data().get('form')}")
+#         return response

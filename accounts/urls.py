@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path, reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView 
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import views as auth_views
 
 app_name = "accounts"
@@ -31,11 +31,9 @@ password_reset_views = [
         template_name="accounts/password_reset_complete.html"), name="password_reset_complete"),]
 
 
-
-
 password_change_views = [
     path("password_change/", views.CustomPasswordChangeView.as_view(), name="password_change"),
-    path("password_change_done/", auth_views.PasswordChangeDoneView.as_view(
+    path("password_change_done/", auth_views.PasswordResetDoneView.as_view(
         template_name="accounts/password_change_done.html"), name="password_change_done"),
 ]
 

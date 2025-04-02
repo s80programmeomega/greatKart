@@ -7,3 +7,5 @@ django-browser-reload
 pywatchman
 pillow
 docutils
+django-crispy-forms
+crispy_bootstrap5

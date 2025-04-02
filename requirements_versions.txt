@@ -1,8 +1,10 @@
 asgiref==3.8.1
+crispy-bootstrap5==2025.4
 dj-database-url==2.3.0
 Django==5.1.7
 django-browser-reload==1.18.0
 django-cleanup==9.0.0
+django-crispy-forms==2.3
 docutils==0.21.2
 pillow==11.1.0
 psycopg2-binary==2.9.10
