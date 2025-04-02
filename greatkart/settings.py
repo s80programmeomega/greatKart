@@ -84,6 +84,8 @@ ROOT_URLCONF = 'greatkart.urls'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+# LOGIN_URL = "accounts:login"
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

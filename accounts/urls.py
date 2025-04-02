@@ -1,6 +1,6 @@
 from . import views
 from django.urls import path, reverse_lazy
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView 
 from django.contrib.auth import views as auth_views
 
 app_name = "accounts"
@@ -14,7 +14,8 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     path("register/", views.UserRegisterView.as_view(), name="register"),
 
-    # Password reset views
+]
+password_reset_views = [
     path("password_reset/", auth_views.PasswordResetView.as_view(
         template_name="accounts/password_reset.html", email_template_name="accounts/password_reset_email.html",
         success_url=reverse_lazy("accounts:password_reset_done"), extra_email_context={
@@ -27,5 +28,15 @@ urlpatterns = [
         template_name="accounts/password_reset_confirm.html",
         success_url=reverse_lazy("accounts:password_reset_complete")), name="password_reset_confirm"),
     path("reset_done/", auth_views.PasswordResetCompleteView.as_view(
-        template_name="accounts/password_reset_complete.html"), name="password_reset_complete"),
+        template_name="accounts/password_reset_complete.html"), name="password_reset_complete"),]
+
+
+
+
+password_change_views = [
+    path("password_change/", views.CustomPasswordChangeView.as_view(), name="password_change"),
+    path("password_change_done/", auth_views.PasswordChangeDoneView.as_view(
+        template_name="accounts/password_change_done.html"), name="password_change_done"),
 ]
+
+urlpatterns += password_reset_views + password_change_views
