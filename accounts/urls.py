@@ -13,6 +13,7 @@ urlpatterns = [
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
     path("register/", views.UserRegisterView.as_view(), name="register"),
+    path('update/<int:pk>/', views.update_user, name='update_user'),
 
 ]
 password_reset_views = [
@@ -37,4 +38,9 @@ password_change_views = [
         template_name="accounts/password_change_done.html"), name="password_change_done"),
 ]
 
-urlpatterns += password_reset_views + password_change_views
+profile_views = [
+    path("profile/", views.user_profile_view, name="profile"),
+    path("delete/", views.delete_account, name="delete_account"),
+]
+
+urlpatterns += password_reset_views + password_change_views + profile_views

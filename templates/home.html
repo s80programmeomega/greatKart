@@ -10,7 +10,16 @@
   <!-- ========================= SECTION MAIN ========================= -->
     <section class="section-intro padding-y-sm">
       <div class="container">
-
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{message.extra_tags}} alert-dismissible fade show" role="alert">
+              {{message}}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endfor %}
+        {% endif %}
         <div class="intro-banner-wrap">
           <img src={% static 'images/banners/1.jpg' %} alt='banner-image' class="img-fluid rounded">
         </div>

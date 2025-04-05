@@ -1,19 +1,19 @@
-from django.shortcuts import render
-from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.views import (PasswordChangeView,
+                                       PasswordResetConfirmView)
 from django.http import HttpRequest
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views import View
 
-from .forms import UserLoginForm, UserSignUpForm
+from .forms import (UserLoginForm, UserProfileForm, UserSignUpForm,
+                    UserUpdateForm)
 
 
 class UserRegisterView(View):
@@ -96,6 +96,10 @@ def user_login(request: HttpRequest):
         user = authenticate(email=email, password=password)
         if user:
             auth_login(request, user)
+            messages.add_message(request, messages.SUCCESS,
+                                 'Login successful',
+                                 extra_tags='success')
+
             # Redirect to the 'next' parameter if it exists, otherwise go to the home page
             # 'home' is the fallback URL name
             next_url = request.GET.get('next', "home")
@@ -111,6 +115,8 @@ def user_login(request: HttpRequest):
 def user_logout(request: HttpRequest):
     if request.user.is_authenticated:
         logout(request)
+        messages.add_message(request, messages.SUCCESS, message='Logout successful',
+                             extra_tags='success')
     return render(request, 'accounts/logout.html')
 
 
@@ -123,16 +129,56 @@ class CustomPasswordChangeView(PasswordChangeView):
         # Log out the user after a successful password change
         response = super().form_valid(form)
         logout(self.request)
-        messages.success(self.request,                        'Password changed successfully. Please login again.',
+        messages.success(self.request, 'Password changed successfully. Please login again.',
                          extra_tags='success')
         return response
 
 
-# class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-#     template_name = "accounts/password_reset_confirm.html"
-#     success_url = reverse_lazy("accounts:password_reset_complete")
+@login_required
+def user_profile_view(request: HttpRequest):
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save(user=request.user, commit=True)
+            messages.success(request,
+                             'Profile updated successfully',
+                             extra_tags='success')
+            return redirect('accounts:profile')
+        else:
+            messages.error(
+                request, 'Please correct the errors below.', extra_tags="danger")
+            return render(request, 'accounts/profile.html', {'form': form})
+    else:
+        form = UserProfileForm(instance=profile)
+    return render(request, 'accounts/profile.html', {'form': form})
 
-#     def get(self, request, *args, **kwargs):
-#         response = super().get(request, *args, **kwargs)
-#         print(f"Form context: {self.get_context_data().get('form')}")
-#         return response
+
+@login_required
+def delete_account(request: HttpRequest):
+    if request.user.is_authenticated:
+        user = request.user
+        user.delete()
+        messages.success(request,
+                         'Account deleted successfully',
+                         extra_tags='success')
+        return redirect('home')
+
+
+@login_required
+def update_user(request: HttpRequest, pk):
+    user = get_object_or_404(get_user_model(), pk=pk)
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, 'User details updated successfully.', extra_tags="success")
+            return redirect('accounts:profile')  # Redirect to the profile page
+        else:
+            messages.error(
+                request, 'Please correct the errors below.', extra_tags="danger")
+            return render(request, 'accounts/update_user.html', {'form': form})
+    else:
+        form = UserUpdateForm(instance=user)
+    return render(request, 'accounts/update_user.html', {'form': form})

@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "crispy_forms",
     "crispy_bootstrap5",
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -201,4 +202,11 @@ EMAIL_HOST_PASSWORD = os.environ.get(
 # Crispy forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+
+# Django Extensions
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
 

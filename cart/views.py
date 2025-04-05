@@ -19,7 +19,10 @@ def get_cart_id(request: HttpRequest):
     return request.session.get("cart_id")
 
 
-def add_cart(request, product_id):
+@login_required
+def add_cart(request: HttpRequest, product_id):
+    """Add product to cart"""
+#def add_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     product_variations = []
     if request.method == "POST":

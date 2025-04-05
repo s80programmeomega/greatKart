@@ -9,3 +9,6 @@ pillow
 docutils
 django-crispy-forms
 crispy_bootstrap5
+django-extensions
+pyparsing 
+pydot

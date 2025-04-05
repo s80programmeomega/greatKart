@@ -1,0 +1,97 @@
+/	store.views.home	home
+/accounts/login/	accounts.views.user_login	accounts:login
+/accounts/logout/	accounts.views.user_logout	accounts:logout
+/accounts/password_change/	accounts.views.CustomPasswordChangeView	accounts:password_change
+/accounts/password_change_done/	django.contrib.auth.views.PasswordResetDoneView	accounts:password_change_done
+/accounts/password_reset/	django.contrib.auth.views.PasswordResetView	accounts:password_reset
+/accounts/password_reset_done/	django.contrib.auth.views.PasswordResetDoneView	accounts:password_reset_done
+/accounts/register/	accounts.views.UserRegisterView	accounts:register
+/accounts/reset/<uidb64>/<token>/	django.contrib.auth.views.PasswordResetConfirmView	accounts:password_reset_confirm
+/accounts/reset_done/	django.contrib.auth.views.PasswordResetCompleteView	accounts:password_reset_complete
+/admin/	django.contrib.admin.sites.index	admin:index
+/admin/<app_label>/	django.contrib.admin.sites.app_index	admin:app_list
+/admin/<url>	django.contrib.admin.sites.catch_all_view
+/admin/accounts/customuser/	django.contrib.admin.options.changelist_view	admin:accounts_customuser_changelist
+/admin/accounts/customuser/<id>/password/	django.contrib.auth.admin.user_change_password	admin:auth_user_password_change
+/admin/accounts/customuser/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/accounts/customuser/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:accounts_customuser_change
+/admin/accounts/customuser/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:accounts_customuser_delete
+/admin/accounts/customuser/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:accounts_customuser_history
+/admin/accounts/customuser/add/	django.contrib.auth.admin.add_view	admin:accounts_customuser_add
+/admin/accounts/userprofile/	django.contrib.admin.options.changelist_view	admin:accounts_userprofile_changelist
+/admin/accounts/userprofile/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/accounts/userprofile/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:accounts_userprofile_change
+/admin/accounts/userprofile/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:accounts_userprofile_delete
+/admin/accounts/userprofile/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:accounts_userprofile_history
+/admin/accounts/userprofile/add/	django.contrib.admin.options.add_view	admin:accounts_userprofile_add
+/admin/auth/group/	django.contrib.admin.options.changelist_view	admin:auth_group_changelist
+/admin/auth/group/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/auth/group/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:auth_group_change
+/admin/auth/group/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:auth_group_delete
+/admin/auth/group/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:auth_group_history
+/admin/auth/group/add/	django.contrib.admin.options.add_view	admin:auth_group_add
+/admin/autocomplete/	django.contrib.admin.sites.autocomplete_view	admin:autocomplete
+/admin/cart/cart/	django.contrib.admin.options.changelist_view	admin:cart_cart_changelist
+/admin/cart/cart/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/cart/cart/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:cart_cart_change
+/admin/cart/cart/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:cart_cart_delete
+/admin/cart/cart/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:cart_cart_history
+/admin/cart/cart/add/	django.contrib.admin.options.add_view	admin:cart_cart_add
+/admin/cart/cartitem/	django.contrib.admin.options.changelist_view	admin:cart_cartitem_changelist
+/admin/cart/cartitem/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/cart/cartitem/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:cart_cartitem_change
+/admin/cart/cartitem/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:cart_cartitem_delete
+/admin/cart/cartitem/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:cart_cartitem_history
+/admin/cart/cartitem/add/	django.contrib.admin.options.add_view	admin:cart_cartitem_add
+/admin/category/category/	django.contrib.admin.options.changelist_view	admin:category_category_changelist
+/admin/category/category/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/category/category/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:category_category_change
+/admin/category/category/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:category_category_delete
+/admin/category/category/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:category_category_history
+/admin/category/category/add/	django.contrib.admin.options.add_view	admin:category_category_add
+/admin/doc/	django.contrib.admindocs.views.BaseAdminDocsView	django-admindocs-docroot
+/admin/doc/bookmarklets/	django.contrib.admindocs.views.BookmarkletsView	django-admindocs-bookmarklets
+/admin/doc/filters/	django.contrib.admindocs.views.TemplateFilterIndexView	django-admindocs-filters
+/admin/doc/models/	django.contrib.admindocs.views.ModelIndexView	django-admindocs-models-index
+/admin/doc/models/<app_label>\.<model_name>/	django.contrib.admindocs.views.ModelDetailView	django-admindocs-models-detail
+/admin/doc/tags/	django.contrib.admindocs.views.TemplateTagIndexView	django-admindocs-tags
+/admin/doc/templates/<path:template>/	django.contrib.admindocs.views.TemplateDetailView	django-admindocs-templates
+/admin/doc/views/	django.contrib.admindocs.views.ViewIndexView	django-admindocs-views-index
+/admin/doc/views/<view>/	django.contrib.admindocs.views.ViewDetailView	django-admindocs-views-detail
+/admin/jsi18n/	django.contrib.admin.sites.i18n_javascript	admin:jsi18n
+/admin/login/	django.contrib.admin.sites.login	admin:login
+/admin/logout/	django.contrib.admin.sites.logout	admin:logout
+/admin/password_change/	django.contrib.admin.sites.password_change	admin:password_change
+/admin/password_change/done/	django.contrib.admin.sites.password_change_done	admin:password_change_done
+/admin/r/<int:content_type_id>/<path:object_id>/	django.contrib.contenttypes.views.shortcut	admin:view_on_site
+/admin/sites/site/	django.contrib.admin.options.changelist_view	admin:sites_site_changelist
+/admin/sites/site/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/sites/site/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:sites_site_change
+/admin/sites/site/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:sites_site_delete
+/admin/sites/site/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:sites_site_history
+/admin/sites/site/add/	django.contrib.admin.options.add_view	admin:sites_site_add
+/admin/store/product/	django.contrib.admin.options.changelist_view	admin:store_product_changelist
+/admin/store/product/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/store/product/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:store_product_change
+/admin/store/product/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:store_product_delete
+/admin/store/product/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:store_product_history
+/admin/store/product/add/	django.contrib.admin.options.add_view	admin:store_product_add
+/admin/store/variation/	django.contrib.admin.options.changelist_view	admin:store_variation_changelist
+/admin/store/variation/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/store/variation/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:store_variation_change
+/admin/store/variation/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:store_variation_delete
+/admin/store/variation/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:store_variation_history
+/admin/store/variation/add/	django.contrib.admin.options.add_view	admin:store_variation_add
+/cart/	cart.views.get_cart	cart
+/cart/add_cart/<int:product_id>	cart.views.add_cart	add_cart
+/cart/place_order/	cart.views.place_order	place_order
+/cart/remove_cart/<int:product_id>	cart.views.remove_cart	remove_cart
+/cart/remove_cart_item/<int:product_id>	cart.views.remove_cart_item	remove_cart_item
+/home/	store.views.home	home
+/media/<path>	django.views.static.serve
+/reload/events/	django_browser_reload.views.events	django_browser_reload:events
+/sitemap.xml/	django.contrib.sitemaps.views.sitemap	django.contrib.sitemaps.views.sitemap
+/store/	store.views.store	store
+/store/category/<slug:category_slug>/	store.views.store	products_by_categories
+/store/category/<slug:category_slug>/<slug:product_slug>	store.views.product_detail	product_detail
+/store/search/	store.views.search	search

@@ -1,15 +1,13 @@
-from PIL import Image
-from django.core.files.base import ContentFile
-from io import BytesIO
-from django.contrib.auth import get_user_model
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    AnonymousUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
 import os
+from io import BytesIO
+from django.utils.safestring import mark_safe
+from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import (AbstractBaseUser, AnonymousUser,
+                                        BaseUserManager, PermissionsMixin)
+from django.core.files.base import ContentFile
 from django.db import models, transaction
+from PIL import Image
 
 
 class UserType(models.TextChoices):
