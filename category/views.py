@@ -38,10 +38,8 @@ def category_detail(request: HttpRequest, category_id):
 
 def category_list(request):
     # Logic to retrieve a list of categories
-    # For example:
-    # categories = Category.objects.all()
-    # return render(request, 'category_list.html', {'categories': categories})
-    pass
+    categories = Category.objects.all()
+    return render(request, 'store/category_list.html', {'categories': categories})
 
 
 def category_create(request: HttpRequest):
@@ -81,18 +79,11 @@ def category_update(request, category_id):
 def category_delete(request: HttpRequest, category_id):
     # Logic to handle category deletion
     category = get_object_or_404(Category, id=category_id)
-    if request.method == 'POST':
-        category.delete()
-        messages.success(
-            request=request, message='Category deleted successfully!', extra_tags='success')
-        next_url = request.META.get('HTTP_REFERER', 'home')
-        return redirect(next_url)
-    else:
-        form = CategoryForm(instance=category)
-    context = {
-        'form': form,
-    }
-    return render(request, 'store/category_confirm_delete.html', context=context)
+    category.delete()
+    messages.success(
+        request=request, message='Category deleted successfully!', extra_tags='success')
+    next_url = request.META.get('HTTP_REFERER', 'category:category_list')
+    return redirect(next_url)
 
 
 def category_search(request):
