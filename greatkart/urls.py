@@ -38,6 +38,7 @@ urlpatterns = [
     path("reload/", include("django_browser_reload.urls")),
     path("accounts/", include("accounts.urls", namespace="accounts")),
     path("cart/", include("cart.urls")),
+    path("category/", include("category.urls")),
     path("store/", include("store.urls")),
     path(
         "sitemap.xml/",
