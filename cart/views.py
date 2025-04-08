@@ -65,7 +65,7 @@ def add_cart(request: HttpRequest, product_id):
             "quantity": quantity,
             "product": Product,
         }
-        return render(request, "store/stock_warning.html", context)
+        return render(request, "cart/stock_warning.html", context)
 
 
 def remove_cart(request, product_id):
@@ -117,8 +117,8 @@ def get_cart(request: HttpRequest):
         "quantity": quantity,
         "items_count": items_count,
     }
-    return render(request, "store/cart.html", context)
+    return render(request, "cart/cart.html", context)
 
 
 def place_order(request: HttpRequest):
-    return render(request, "store/place-order.html")
+    return render(request, "cart/place-order.html")

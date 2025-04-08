@@ -1,31 +1,38 @@
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 from category.models import Category
 
 
-
 class Product(models.Model):
     product_name = models.CharField(max_length=200, unique=True, blank=False)
-    slug = models.SlugField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True)
     description = models.TextField(max_length=500, blank=True)
     price = models.FloatField()
-    product_image = models.ImageField(upload_to="photos/products/", default="defaults/default_product.jpg" ,blank=True)
+    product_image = models.ImageField(
+        upload_to="photos/products/", default="defaults/default_product.jpg", blank=True)
     stock = models.IntegerField(default=0)
     is_available = models.BooleanField(default=True)
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
+
+    date_added = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
 
     def get_url(self):
         return reverse("product_detail", args=[self.category.slug, self.slug])
-    
+
     def get_absolute_url(self):
         return self.get_url()
-    
+
     class Meta:
-        ordering = ('-created_date',)
-    
+        ordering = ('-date_added',)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.product_name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.product_name

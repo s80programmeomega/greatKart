@@ -12,7 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
         "stock",
         "category",
         "thumbnail_preview",
-        "modified_date",
+        "last_modified",
         "is_available",
     ]
     list_filter = [
@@ -20,7 +20,7 @@ class ProductAdmin(admin.ModelAdmin):
         "price",
         "stock",
         "category",
-        "modified_date",
+        "last_modified",
         "is_available",
     ]
 

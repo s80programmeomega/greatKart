@@ -26,20 +26,20 @@ def category_detail(request: HttpRequest, category_id):
 
             print(f"==>*** {form.errors} ***<==")
 
-            return render(request, 'store/category_detail.html', {'form': form, 'category_id': category_id})
+            return render(request, 'category/category_detail.html', {'form': form, 'category_id': category_id})
     else:
         form = CategoryForm(instance=category)
         context = {
             'form': form,
             'category': category,
         }
-        return render(request, 'store/category_detail.html', context)
+        return render(request, 'category/category_detail.html', context)
 
 
 def category_list(request):
     # Logic to retrieve a list of categories
     categories = Category.objects.all()
-    return render(request, 'store/category_list.html', {'categories': categories})
+    return render(request, 'category/category_list.html', {'categories': categories})
 
 
 def category_create(request: HttpRequest):
@@ -50,15 +50,13 @@ def category_create(request: HttpRequest):
             form.save()
             messages.success(
                 request=request, message='Category created successfully!', extra_tags='success')
-            next_url = request.META.get('HTTP_REFERER', 'home')
-            # return redirect('category_list')
-            return redirect(next_url)
+            return redirect('category:category_list')
         else:
             messages.error(
                 request=request, message='Failed to create category.', extra_tags='danger')
     else:
         form = CategoryForm()
-    return render(request, 'store/category_create.html', {'form': form})
+    return render(request, 'category/category_create.html', {'form': form})
 
 
 def category_update(request, category_id):
@@ -82,8 +80,7 @@ def category_delete(request: HttpRequest, category_id):
     category.delete()
     messages.success(
         request=request, message='Category deleted successfully!', extra_tags='success')
-    next_url = request.META.get('HTTP_REFERER', 'category:category_list')
-    return redirect(next_url)
+    return redirect('category:category_list')
 
 
 def category_search(request):

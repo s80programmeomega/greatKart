@@ -29,6 +29,12 @@ Category - {{ category.name }}
     
                 <div class="row justify-content-end p-3"><button type="submit" class="btn btn-outline-primary">Update</button></div>
             </form>
+            <div>
+                <h4 class="text-center">Remove Product</h4>
+                <div class="row justify-content-center py-3">
+                    <a href="{% url 'category:category_delete' category.id %}" class="btn btn-outline-danger">Delete this?</a>
+                </div>
+            </div>
         </div>
         <div class="col"></div>
     </div>

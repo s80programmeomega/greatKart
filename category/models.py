@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+
 class Category(models.Model):
     category_name = models.CharField(max_length=100, unique=True, blank=False)
     slug = models.SlugField(max_length=100, unique=True, blank=True, null=True)
@@ -15,6 +16,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = "category"
         verbose_name_plural = "categories"
+        ordering = ("-date_added",)
 
     def get_url(self):
         return reverse("products_by_categories", args=[self.slug])

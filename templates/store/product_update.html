@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Product - {{ product.name }}
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col"></div>
+        <div class="col-6">
+            <div class="text-center py-3">
+                {% if product %}
+                {% if product.product_image %}
+                <a href='{{product.product_image.url}}' class="">
+                    <img class="img-thubnail rounded-circle" src='{{product.product_image.url}}' alt="profile_picture"
+                        srcset="" width="200px" height="200px">
+                </a>
+                {% endif %}
+                {% endif %}
+            </div>
+            <form method="POST" enctype="multipart/form-data" class="py-3">
+                {% csrf_token %}
+
+                <!-- Render the form -->
+                {{ form|crispy }}
+
+                <div class="row justify-content-end p-3"><button type="submit"
+                        class="btn btn-outline-primary">Update</button></div>
+            </form>
+            <div>
+                <h4 class="text-center">Remove Product</h4>
+                <div class="row justify-content-center py-3">
+                    <a href="{% url 'product_delete' product.id %}" class="btn btn-outline-danger">Delete this?</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>
+
+{% endblock content %}
