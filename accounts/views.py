@@ -1,3 +1,4 @@
+import re
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth import login as auth_login
@@ -83,7 +84,7 @@ def user_is_logged_out(user: User):
     return not user.is_authenticated
 
 
-@user_passes_test(user_is_logged_out, login_url='home')
+@user_passes_test(user_is_logged_out,)
 def user_login(request: HttpRequest):
     # if request.user.is_authenticated:
     #     # Redirect authenticated users to the previous page or fallback to 'home'
@@ -137,6 +138,7 @@ class CustomPasswordChangeView(PasswordChangeView):
 @login_required
 def user_profile_view(request: HttpRequest):
     profile = request.user.profile
+    print(f"{request.user.is_superuser=}")
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():

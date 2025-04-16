@@ -3,98 +3,120 @@
 {% load humanize %}
 
 {% block content %}
-	<section class="section-content padding-y bg">
+<section class="section-content padding-y bg">
 	<div class="container">
 
-	<!-- ============================ COMPONENT 1 ================================= -->
-	{% if items_count %}
-	<div class="row justify-content-center">
-		<aside class="col-lg-9">
-			<div class="card">
-			<table class="table table-borderless table-shopping-cart">
-				<thead class="text-muted">
-					<tr class="small text-uppercase">
-						<th scope="col">Product</th>
-						<th scope="col" width="120">Quantity</th>
-						<th scope="col" width="120">Price</th>
-						<th scope="col" class="text-right" width="200"> </th>
-					</tr>
-				</thead>
-			<tbody>
-				{% for ci in cart_items %}
-					<tr >
-						<td class="">
-							<figure class="itemside align-items-center">
-								<div class="aside">
-									<a href="{{ci.product.product_image.url}}">
-										<img src="{{ci.product.product_image.url}}" class="img-sm">
-									</a>
-								</div>
-								<figcaption class="info">
-									<a  href="{{ci.product.get_url}}" class="title {% if ci.quantity > ci.product.stock %}text-warning{% endif %}">{{ci.product.product_name}}</a>
-									{% for color in ci.product.variation_set.colors %}
-										<p class="text-muted small">Color: {{color.variation_value}}</p>
-									{% endfor %}
-									{% for size in ci.product.variation_set.sizes %}
-										<p class="text-muted small">Size: {{size.variation_value}}</p>
-									{% endfor %}
-								</figcaption>
-							</figure>
-						</td>
-						<td>
-							<!-- col.// -->
-							<div class="col">
-								<div class="input-group input-spinner">
-									<div class="input-group-prepend">
-									<a href="{% url 'remove_cart' ci.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
-									</div>
-									<input type="text" class="form-control"  value="{{ci.quantity}}">
-									<div class="input-group-append">
-									<a href="{% url 'add_cart' ci.product.id %}" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </a>
-									</div>
-								</div> <!-- input-group.// -->
-							</div> <!-- col.// -->
-						</td>
-						<td>
-							<div class="price-wrap">
-								<var class="price">$ {{ci.sub_total | intcomma}}</var>
-								<small class="text-muted"> $ {{ci.product.price | intcomma}} each </small>
-							</div> <!-- price-wrap .// -->
-						</td>
-						<td class="text-right">
-						<a href="{% url 'remove_cart_item' ci.product.id %}" class="btn btn-danger"> Remove</a>
-						</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-			</table>
-			</div> <!-- card.// -->
+		<!-- ============================ COMPONENT 1 ================================= -->
+		{% if items_count %}
+		<div class="row justify-content-center">
+			<aside class="col-lg-9">
+				<div class="card">
+					<form method="POST" action="{% url 'cart:update_cart' %}">
+						{% csrf_token %}
+						<table class="table table-borderless table-shopping-cart">
+							<thead class="text-muted">
+								<tr class="small text-uppercase">
+									<th scope="col">Product</th>
+									<th scope="col" width="120">Quantity</th>
+									<th scope="col" width="120">Price</th>
+									<th scope="col" class="text-right" width="200"> </th>
+								</tr>
+							</thead>
+							<tbody>
 
-				</aside> <!-- col.// -->
-				<aside class="col-lg-3">
+								{% for ci in cart_items %}
+								<tr>
+									<td class="">
+										<figure class="itemside align-items-center">
+											<div class="aside">
+												<a href="{{ci.product.product_image.url}}">
+													<img src="{{ci.product.product_image.url}}" class="img-sm">
+												</a>
+											</div>
+											<figcaption class="info">
+												<a href="{{ci.product.get_url}}"
+													class="title {% if ci.quantity > ci.product.stock %}text-warning{% endif %}">{{ci.product.product_name}}</a>
+												{% for color in ci.product.variation_set.colors %}
+												<p class="text-muted small">Color: {{color.variation_value}}</p>
+												{% endfor %}
+												{% for size in ci.product.variation_set.sizes %}
+												<p class="text-muted small">Size: {{size.variation_value}}</p>
+												{% endfor %}
+											</figcaption>
+										</figure>
+									</td>
+									<td>
+										<!-- col.// -->
+										<div class="col">
+											<div class="input-group input-spinner">
+												<div class="input-group-prepend">
+													<a href="{% url 'cart:remove_cart' ci.product.id %}"
+														class="btn btn-light" type="button" id="button-plus"> <i
+															class="fa fa-minus"></i> </a>
+												</div>
+												<input type="text" class="form-control" name="quantity_{{ci.id}}" value="{{ci.quantity}}" di>
+												<div class="input-group-append">
+													<a href="{% url 'cart:add_cart' ci.product.id %}" class="btn btn-light"
+														type="button" id="button-minus"> <i class="fa fa-plus"></i> </a>
+												</div>
+											</div> <!-- input-group.// -->
+										</div> <!-- col.// -->
+									</td>
+									<td>
+										<div class="price-wrap">
+											<var class="price">$ {{ci.sub_total | intcomma}}</var>
+											<small class="text-muted"> $ {{ci.product.price | intcomma}} each </small>
+										</div> <!-- price-wrap .// -->
+									</td>
+									<td class="text-right">
+										<a href="{% url 'cart:remove_cart_item' ci.product.id %}" class="btn btn-outline-danger btn-sm">
+											Remove</a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr class="py-5">
+									<td></td>
+									<td>
+										<a href='{% url "cart:empty_cart" %}' class="btn btn-outline-danger">Clear</a>
+									</td>
+									<td>
+										<button class="btn btn-outline-info" type="submit">
+											Update
+										</button>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div> <!-- card.// -->
 
-					<div class="card">
+			</aside> <!-- col.// -->
+			<aside class="col-lg-3">
+
+				<div class="card">
 					<div class="card-body">
 						<dl class="dlist-align">
-						<dt>Total price:</dt>
-						<dd class="text-right">$ {{total | intcomma}} </dd>
+							<dt>Total price:</dt>
+							<dd class="text-right">$ {{total | intcomma}} </dd>
 						</dl>
 						<dl class="dlist-align">
-						<dt>Tax:</dt>
-						<dd class="text-right"> $ {{tax | intcomma}}</dd>
+							<dt>Tax:</dt>
+							<dd class="text-right"> $ {{tax | intcomma}}</dd>
 						</dl>
 						<dl class="dlist-align">
-						<dt>Grand Total:</dt>
-						<dd class="text-right text-dark b"><strong>$ {{grand_total | intcomma}}</strong></dd>
+							<dt>Grand Total:</dt>
+							<dd class="text-right text-dark b"><strong>$ {{grand_total | intcomma}}</strong></dd>
 						</dl>
 						<hr>
 						<p class="text-center mb-3">
 							<img src="{% static './images/misc/payments.png' %}" height="26">
 						</p>
-						<a href="{% url 'place_order' %}" class="btn btn-primary btn-block"> Checkout </a>
+						<a href="{% url 'order:place_order' %}" class="btn btn-primary btn-block"> Checkout </a>
 						<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
 					</div> <!-- card-body.// -->
-					</div> <!-- card.// -->
+				</div> <!-- card.// -->
 
 			</aside> <!-- col.// -->
 
@@ -113,10 +135,9 @@
 			</div>
 		</div>
 		{% endif %}
-	<!-- ============================ COMPONENT 1 END .// ================================= -->
+		<!-- ============================ COMPONENT 1 END .// ================================= -->
 
 	</div> <!-- container .//  -->
-	</section>
-	<!-- ========================= SECTION CONTENT END// ========================= -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
 {% endblock content %}
-

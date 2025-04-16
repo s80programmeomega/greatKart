@@ -35,18 +35,20 @@
       <div class="col"></div>
     </div>
     <hr>
+    {% if request.user.is_superuser %}
     <div class="row justify-content-center">
       <div class="col"></div>
-      <div class="col-6 d-block">
-        <h4 class="text-center">Account Deletion</h4>
-        <div class="text-center">
-          <form method="POST" action="{% url 'accounts:delete_account' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-outline-danger">Delete Account?</button>
-          </form>
+        <div class="col-6 d-block">
+          <h4 class="text-center">Account Deletion</h4>
+          <div class="text-center">
+            <form method="POST" action="{% url 'accounts:delete_account' %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-outline-danger">Delete Account?</button>
+            </form>
+          </div>
         </div>
+        <div class="col"></div>
       </div>
-      <div class="col"></div>
-    </div>
+    {% endif %}
   </div>
 {% endblock %}

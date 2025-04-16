@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db.models import Q
-# Create your views here.
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -107,6 +106,12 @@ def product_update(request: HttpRequest, id):
             )
     else:
         form = ProductForm(instance=product)
+        if request.user.has_perm("store.add_product"):
+            for field in form.fields.values():
+                # field.widget.attrs["disabled"] = True
+                # field.widget.attrs["readonly"] = True
+                print(
+                    f'{field}\n===>{field.widget.attrs}', end="<====\n")
         return render(
             request=request,
             template_name="store/product_update.html",

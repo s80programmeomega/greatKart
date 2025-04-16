@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
 
 {% block title %}
  Place Order
@@ -21,46 +23,18 @@
 							<div class="card-body">
 								<h4 class="card-title mb-4">Review cart</h4>
 								<div class="row">
-									<div class="col-md-6">
-										<figure class="itemside  mb-4">
-											<div class="aside"><img src='{% static "images/items/1.jpg" %}' class="border img-sm">
-											</div>
-											<figcaption class="info">
-												<p>Apple iPad (2019) 32Gb Wi-Fi gold </p>
-												<span class="text-muted">2x = $560 </span>
-											</figcaption>
-										</figure>
-									</div> <!-- col.// -->
-									<div class="col-md-6">
-										<figure class="itemside  mb-4">
-											<div class="aside"><img src='{% static "images/items/2.jpg" %}' class="border img-sm">
-											</div>
-											<figcaption class="info">
-												<p>Apple iPad (2019) 32Gb Wi-Fi gold </p>
-												<span class="text-muted">2x = $560 </span>
-											</figcaption>
-										</figure>
-									</div> <!-- col.// -->
-									<div class="col-md-6">
-										<figure class="itemside mb-4">
-											<div class="aside"><img src='{% static "images/items/3.jpg" %}' class="border img-sm">
-											</div>
-											<figcaption class="info">
-												<p>Apple iPad (2019) 32Gb Wi-Fi gold </p>
-												<span class="text-muted">2x = $560 </span>
-											</figcaption>
-										</figure>
-									</div> <!-- col.// -->
-									<div class="col-md-6">
-										<figure class="itemside  mb-4">
-											<div class="aside"><img src='{% static "images/items/4.jpg" %}' class="border img-sm">
-											</div>
-											<figcaption class="info">
-												<p>Apple iPad (2019) 32Gb Wi-Fi gold </p>
-												<span class="text-muted">2x = $560 </span>
-											</figcaption>
-										</figure>
-									</div> <!-- col.// -->
+									{% for item in cart_items %}
+										<div class="col-md-6">
+											<figure class="itemside  mb-4">
+												<div class="aside"><img src='{{item.product.product_image.url}}' class="border img-sm">
+												</div>
+												<figcaption class="info">
+													<p>{{ item.product.product_name }}</p>
+													<span class="text-muted">{{ item.quantity|intcomma|intword }} x ${{ item.product.price|intcomma|intword}} = ${{item.sub_total|intcomma|intword }}</span>
+												</figcaption>
+											</figure>
+										</div> <!-- col.// -->
+									{% endfor %}
 								</div> <!-- row.// -->
 							</div> <!-- card-body.// -->
 						</article> <!-- card.// -->
@@ -69,8 +43,10 @@
 						<article class="card mb-4">
 							<div class="card-body">
 								<h4 class="card-title mb-4">Contact info</h4>
-								<form action="">
-									<div class="row">
+								<form method="POST" >
+									{% csrf_token %}
+									{{form|crispy}}
+									{% comment %} <div class="row">
 										<div class="form-group col-sm-6">
 											<label>Frst name</label>
 											<input type="text" placeholder="Type here" class="form-control">
@@ -87,7 +63,10 @@
 											<label>Email</label>
 											<input type="email" placeholder="example@gmail.com" class="form-control">
 										</div>
-									</div> <!-- row.// -->
+									</div> <!-- row.// --> {% endcomment %}
+									<div class="row justify-content-center">
+										<button class="btn btn-outline-primary btn-sm">Submit</button>
+									</div>
 								</form>
 							</div> <!-- card-body.// -->
 						</article> <!-- card.// -->
@@ -198,21 +177,21 @@
 							<div class="card-body">
 								<dl class="dlist-align">
 									<dt>Total price:</dt>
-									<dd class="text-right">$69.97</dd>
+									<dd class="text-right">${{order_total}}</dd>
 								</dl>
 								<dl class="dlist-align">
 									<dt>Tax:</dt>
-									<dd class="text-right"> $10.00</dd>
+									<dd class="text-right"> ${{tax}}</dd>
 								</dl>
 								<dl class="dlist-align">
 									<dt>Total:</dt>
-									<dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+									<dd class="text-right text-dark b"><strong>${{total}}</strong></dd>
 								</dl>
 								<hr>
 								<p class="text-center mb-3">
 									<img src='{% static "images/misc/payments.png" %}' height="26">
 								</p>
-								<a href="./place-order.html" class="btn btn-primary btn-block"> Place Order </a>
+								<a href='{% url "order:place_order" %}' class="btn btn-primary btn-block"> Place Order </a>
 
 							</div> <!-- card-body.// -->
 						</div> <!-- card.// -->

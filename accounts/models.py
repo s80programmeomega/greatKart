@@ -80,6 +80,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = "user"
         verbose_name_plural = "users"
 
+    def get_profile_url(self):
+        """
+        Returns the URL for the user's profile page.
+        """
+        return reverse('accounts:profile', kwargs={'pk': self.pk})
+
     def __str__(self):
         return self.username
 

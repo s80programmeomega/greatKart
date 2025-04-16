@@ -1,13 +1,16 @@
 /	store.views.home	home
+/accounts/delete/	accounts.views.delete_account	accounts:delete_account
 /accounts/login/	accounts.views.user_login	accounts:login
 /accounts/logout/	accounts.views.user_logout	accounts:logout
 /accounts/password_change/	accounts.views.CustomPasswordChangeView	accounts:password_change
 /accounts/password_change_done/	django.contrib.auth.views.PasswordResetDoneView	accounts:password_change_done
 /accounts/password_reset/	django.contrib.auth.views.PasswordResetView	accounts:password_reset
 /accounts/password_reset_done/	django.contrib.auth.views.PasswordResetDoneView	accounts:password_reset_done
+/accounts/profile/	accounts.views.user_profile_view	accounts:profile
 /accounts/register/	accounts.views.UserRegisterView	accounts:register
 /accounts/reset/<uidb64>/<token>/	django.contrib.auth.views.PasswordResetConfirmView	accounts:password_reset_confirm
 /accounts/reset_done/	django.contrib.auth.views.PasswordResetCompleteView	accounts:password_reset_complete
+/accounts/update/<int:pk>/	accounts.views.update_user	accounts:update_user
 /admin/	django.contrib.admin.sites.index	admin:index
 /admin/<app_label>/	django.contrib.admin.sites.app_index	admin:app_list
 /admin/<url>	django.contrib.admin.sites.catch_all_view
@@ -61,6 +64,24 @@
 /admin/jsi18n/	django.contrib.admin.sites.i18n_javascript	admin:jsi18n
 /admin/login/	django.contrib.admin.sites.login	admin:login
 /admin/logout/	django.contrib.admin.sites.logout	admin:logout
+/admin/order/order/	django.contrib.admin.options.changelist_view	admin:order_order_changelist
+/admin/order/order/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/order/order/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:order_order_change
+/admin/order/order/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:order_order_delete
+/admin/order/order/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:order_order_history
+/admin/order/order/add/	django.contrib.admin.options.add_view	admin:order_order_add
+/admin/order/orderproduct/	django.contrib.admin.options.changelist_view	admin:order_orderproduct_changelist
+/admin/order/orderproduct/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/order/orderproduct/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:order_orderproduct_change
+/admin/order/orderproduct/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:order_orderproduct_delete
+/admin/order/orderproduct/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:order_orderproduct_history
+/admin/order/orderproduct/add/	django.contrib.admin.options.add_view	admin:order_orderproduct_add
+/admin/order/payment/	django.contrib.admin.options.changelist_view	admin:order_payment_changelist
+/admin/order/payment/<path:object_id>/	django.views.generic.base.RedirectView
+/admin/order/payment/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:order_payment_change
+/admin/order/payment/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:order_payment_delete
+/admin/order/payment/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:order_payment_history
+/admin/order/payment/add/	django.contrib.admin.options.add_view	admin:order_payment_add
 /admin/password_change/	django.contrib.admin.sites.password_change	admin:password_change
 /admin/password_change/done/	django.contrib.admin.sites.password_change_done	admin:password_change_done
 /admin/r/<int:content_type_id>/<path:object_id>/	django.contrib.contenttypes.views.shortcut	admin:view_on_site
@@ -82,16 +103,27 @@
 /admin/store/variation/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:store_variation_delete
 /admin/store/variation/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:store_variation_history
 /admin/store/variation/add/	django.contrib.admin.options.add_view	admin:store_variation_add
-/cart/	cart.views.get_cart	cart
-/cart/add_cart/<int:product_id>	cart.views.add_cart	add_cart
-/cart/place_order/	cart.views.place_order	place_order
-/cart/remove_cart/<int:product_id>	cart.views.remove_cart	remove_cart
-/cart/remove_cart_item/<int:product_id>	cart.views.remove_cart_item	remove_cart_item
+/cart/	cart.views.get_cart	cart:cart
+/cart/add_cart/<int:product_id>	cart.views.add_cart	cart:add_cart
+/cart/empty_cart/	cart.views.empty_cart	cart:empty_cart
+/cart/remove_cart/<int:product_id>	cart.views.remove_cart	cart:remove_cart
+/cart/remove_cart_item/<int:product_id>	cart.views.remove_cart_item	cart:remove_cart_item
+/cart/update_cart/	cart.views.update_cart	cart:update_cart
+/category/	category.views.category_list	category:category_list
+/category/<int:category_id>/	category.views.category_detail	category:category_detail
+/category/add/	category.views.category_create	category:category_add
+/category/delete/<int:category_id>/	category.views.category_delete	category:category_delete
 /home/	store.views.home	home
 /media/<path>	django.views.static.serve
+/order/checkout/	order.views.checkout_order	order:checkout_order
+/order/place_order/	order.views.place_order	order:place_order
 /reload/events/	django_browser_reload.views.events	django_browser_reload:events
 /sitemap.xml/	django.contrib.sitemaps.views.sitemap	django.contrib.sitemaps.views.sitemap
 /store/	store.views.store	store
 /store/category/<slug:category_slug>/	store.views.store	products_by_categories
 /store/category/<slug:category_slug>/<slug:product_slug>	store.views.product_detail	product_detail
+/store/product/	store.views.product_list	product_list
+/store/product/<int:id>/	store.views.product_update	product_update
+/store/product/add/	store.views.product_create	product_create
+/store/product/delete/<int:id>/	store.views.product_delete	product_delete
 /store/search/	store.views.search	search

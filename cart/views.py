@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from cart.models import Cart, CartItem
 from store.models import Product, Variation
+from django.contrib import messages
 
 
 def get_cart_id(request: HttpRequest):
@@ -22,7 +23,7 @@ def get_cart_id(request: HttpRequest):
 @login_required
 def add_cart(request: HttpRequest, product_id):
     """Add product to cart"""
-#def add_cart(request, product_id):
+# def add_cart(request, product_id):
     product = Product.objects.get(id=product_id)
     product_variations = []
     if request.method == "POST":
@@ -50,14 +51,20 @@ def add_cart(request: HttpRequest, product_id):
         cart_item.quantity += 1
         cart_item.save()
     except CartItem.DoesNotExist:
-        cart_item = CartItem.objects.create(product=product, quantity=1, cart=cart)
+        cart_item = CartItem.objects.create(
+            product=product, quantity=1, cart=cart)
         cart_item.save()
 
     if stock >= cart_item.quantity:
         check_stock = True
-    if check_stock:
-        return redirect("cart")
+        return redirect("cart:cart")
+    # if check_stock:
     else:
+        messages.error(
+            request,
+            f"Only {stock} items available in stock.",
+            extra_tags="danger",
+        )
         quantity = cart_item.quantity
         context = {
             "check_stock": check_stock,
@@ -68,6 +75,7 @@ def add_cart(request: HttpRequest, product_id):
         return render(request, "cart/stock_warning.html", context)
 
 
+@login_required
 def remove_cart(request, product_id):
     cart = Cart.objects.get(cart_id=get_cart_id(request))
     product = get_object_or_404(Product, id=product_id)
@@ -78,7 +86,7 @@ def remove_cart(request, product_id):
     else:
         cart_item.delete()
 
-    return redirect("cart")
+    return redirect("cart:cart")
 
 
 def remove_cart_item(request, product_id):
@@ -86,7 +94,7 @@ def remove_cart_item(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     cart_item = CartItem.objects.get(product=product, cart=cart)
     cart_item.delete()
-    return redirect("cart")
+    return redirect("cart:cart")
 
 
 @login_required
@@ -120,5 +128,59 @@ def get_cart(request: HttpRequest):
     return render(request, "cart/cart.html", context)
 
 
-def place_order(request: HttpRequest):
-    return render(request, "cart/place-order.html")
+@login_required
+def update_cart(request):
+    if request.method == "POST":
+        print(f"\n\n{request.POST}\n\n")
+        data = request.POST.copy()
+        data.pop("csrfmiddlewaretoken")
+        for k, v in data.items():
+            print(f"{k} : {v}")
+            if k.startswith("quantity_"):
+                cart_item_id = k.split("_")[1]
+                new_quantity = int(v)
+                update_cart_item_quantity(request, cart_item_id, new_quantity)
+        return redirect("cart:cart")
+    else:
+        messages.error(request, "Invalid request method", extra_tags="danger")
+    return redirect("cart:cart")
+
+
+def update_cart_item_quantity(request, cart_item_id, new_quantity):
+    cart_item = CartItem.objects.get(id=cart_item_id)
+    old_quantity = cart_item.quantity
+    if new_quantity <= cart_item.product.stock:
+        cart_item.quantity = new_quantity
+        print(f"===>{new_quantity=}<===")
+        cart_item.save()
+        messages.success(
+            request,
+            f"Updated {cart_item.product.product_name} quantity to {new_quantity}",
+            extra_tags="success",
+        )
+    else:
+        if old_quantity <= cart_item.product.stock:
+            cart_item.quantity = old_quantity
+            print(f"===>{old_quantity=}<===")
+        else:
+            cart_item.quantity = cart_item.product.stock
+        cart_item.save()
+        messages.error(
+            request,
+            f"Cannot update {cart_item.product.product_name} quantity to {new_quantity}. Only {cart_item.product.stock} available.",
+            extra_tags="danger",
+        )
+
+
+@login_required
+def empty_cart(request):
+    """Empty the cart"""
+    try:
+        cart = Cart.objects.get(cart_id=get_cart_id(request))
+        cart_items = CartItem.objects.filter(cart=cart)
+        cart_items.delete()
+        messages.success(request, "Cart emptied successfully",
+                         extra_tags="success")
+    except Cart.DoesNotExist:
+        messages.error(request, "Cart does not exist", extra_tags="danger")
+    return redirect("cart:cart")

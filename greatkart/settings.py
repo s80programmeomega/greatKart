@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "category",
     "store",
     "cart",
+    "order",
     # installed
     "django_cleanup.apps.CleanupConfig",
     "django_browser_reload",
@@ -107,6 +108,7 @@ TEMPLATES = [
                 # Custom
                 "cart.context_preprocessors.get_cart_items",
                 "category.context_preprocessors.get_categories",
+                "accounts.context_preprocessors.get_current_user_name",
             ],
         },
     },

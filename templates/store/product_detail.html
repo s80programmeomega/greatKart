@@ -16,14 +16,17 @@
 				<aside class="col-md-6">
 					<article class="gallery-wrap">
 						<div class="img-big-wrap">
-							<a href="{{p.product_image.url}}"><img class='img-fluid img-responsive' src="{{p.product_image.url}}"
+							<a href="{% if not 'default' in p.product_image.url %}
+							{{p.product_image.url}}
+							{% endif %}">
+							<img class='img-fluid img-responsive' src="{{p.product_image.url}}"
 									alt="product image"></a>
 						</div> <!-- img-big-wrap.// -->
 
 					</article> <!-- gallery-wrap .end// -->
 				</aside>
 				<main class="col-md-6 border-left">
-					<form action="{% url 'add_cart' p.id %}" method="post">{% csrf_token %}
+					<form action="{% url 'cart:add_cart' p.id %}" method="post">{% csrf_token %}
 						<article class="content-body">
 							<h2 class="title">{{p.product_name}}</h2>
 							<div class="mb-3">
@@ -61,7 +64,7 @@
 								<button class="btn btn-success" disabled>
 									Added to cart <i class="fas fa-check    "></i>
 								</button>
-								<a href="{% url 'cart' %}" class="btn btn-outline-primary">
+								<a href="{% url 'cart:cart' %}" class="btn btn-outline-primary">
 									View in cart <i class="fas fa-eye px-2"></i>
 								</a>
 							</div>
